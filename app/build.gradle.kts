@@ -39,6 +39,10 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        // Aligning with Kotlin 1.9.22
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
 }
 
 dependencies {
