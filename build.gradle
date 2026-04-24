@@ -2,9 +2,19 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.44"
     }
+}
+
+// Add repositories at the top level for plugin resolution
+repositories {
+    google()
+    mavenCentral()
 }
 
 plugins {
