@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlashcardApp() {
     val navController = rememberNavController()
@@ -37,8 +36,8 @@ fun FlashcardApp() {
         bottomBar = {
             BottomNavigationBar(navController = navController)
         }
-    ) {
-        NavHost(navController = navController, startDestination = "study") {
+    ) { paddingValues -> // Added paddingValues parameter
+        NavHost(navController = navController, startDestination = "study", Modifier.padding(paddingValues)) { // Added Modifier.padding
             composable("study") { StudyScreen() }
             composable("deck") { DeckScreen() }
             composable("settings") { SettingsScreen() }
@@ -50,7 +49,7 @@ fun FlashcardApp() {
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf("Study", "Deck", "Settings")
     NavigationBar {
-        items.forEachIndexed { index, item ->
+        items.forEach { item -> // Changed from forEachIndexed to forEach for simplicity
             NavigationBarItem(
                 icon = {
                     // TODO: Add actual icons
@@ -68,12 +67,5 @@ fun StudyScreen() {
     Text(text = "Study Screen")
 }
 
-@Composable
-fun DeckScreen() {
-    Text(text = "Deck Screen")
-}
-
-@Composable
-fun SettingsScreen() {
-    Text(text = "Settings Screen")
-}
+// DeckScreen and SettingsScreen are defined elsewhere and will be imported.
+// Ensure DeckScreen and SettingsScreen are correctly defined and imported.
