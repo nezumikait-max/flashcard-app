@@ -19,9 +19,6 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Generate correct Gradle Wrapper
-      run: gradle wrapper --gradle-version 8.7
-
     - name: Make Gradle executable
       run: chmod +x ./gradlew
 
