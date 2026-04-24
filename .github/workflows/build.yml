@@ -1,34 +1,23 @@
-name: Build Android APK
+import com.android.build.api.dsl.ManagedVirtualDevice
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.44"
+    }
+}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+plugins {
+    id("com.android.application") version "8.1.0" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
+}
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17'
-
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.7'
-
-    - name: Build Debug APK
-      run: gradle assembleDebug
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: floating-flashcards-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+// Add repositories at the top level for plugin resolution
+repositories {
+    google()
+    mavenCentral()
+}
