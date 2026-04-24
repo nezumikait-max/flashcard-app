@@ -2,7 +2,9 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ] # Targeting main branch from now on
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -13,11 +15,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up Java
+    - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '17'
+        java-version: '17' # Use Java 17 as recommended
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
@@ -25,7 +27,7 @@ jobs:
         gradle-version: '8.7'
 
     - name: Build Debug APK
-      run: gradle assembleDebug --stacktrace --info
+      run: ./gradlew assembleDebug --stacktrace --info # Added --stacktrace and --info
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
