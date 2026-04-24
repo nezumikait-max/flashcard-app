@@ -20,7 +20,4 @@ interface FlashcardDao {
 
     @Delete
     suspend fun delete(flashcard: Flashcard)
-
-    @Query("SELECT * FROM flashcards WHERE id = :id")
-    suspend fun getFlashcardById(id: Int): Flashcard?
 }
