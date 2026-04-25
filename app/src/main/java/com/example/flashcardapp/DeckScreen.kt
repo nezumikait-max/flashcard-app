@@ -23,19 +23,19 @@ fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardView
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { showDialog = true; editingFlashcard = null }) {
-                Text(\"Add Flashcard\")
+                Text("Add Flashcard")
             }
         }
-    ) {\ paddingValues ->
+    ) { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
             .padding(16.dp)) {
             if (flashcards.isEmpty()) {
-                Text(\"No flashcards yet. Add one!\")
+                Text("No flashcards yet. Add one!")
             } else {
                 LazyColumn {
-                    items(flashcards) {\ flashcard ->
+                    items(flashcards) { flashcard ->
                         FlashcardCard(
                             flashcard = flashcard,
                             onEdit = { cardToEdit ->
@@ -56,7 +56,7 @@ fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardView
         FlashcardDialog(
             flashcard = editingFlashcard,
             onDismiss = { showDialog = false },
-            onConfirm = {\ question, answer ->
+            onConfirm = { question, answer ->
                 if (editingFlashcard == null) {
                     viewModel.insertFlashcard(Flashcard(question = question, answer = answer))
                 } else {
@@ -73,37 +73,37 @@ fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardView
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlashcardDialog(flashcard: Flashcard?, onDismiss: () -> Unit, onConfirm: (String, String) -> Unit) {
-    var question by remember { mutableStateOf(flashcard?.question ?: \"\") }
-    var answer by remember { mutableStateOf(flashcard?.answer ?: \"\") }
+    var question by remember { mutableStateOf(flashcard?.question ?: "") }
+    var answer by remember { mutableStateOf(flashcard?.answer ?: "") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (flashcard == null) \"Add Flashcard\" else \"Edit Flashcard\") },
+        title = { Text(if (flashcard == null) "Add Flashcard" else "Edit Flashcard") },
         text = {
             Column {
                 OutlinedTextField(
                     value = question,
                     onValueChange = { question = it },
-                    label = { Text(\"Question\") },
+                    label = { Text("Question") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = answer,
                     onValueChange = { answer = it },
-                    label = { Text(\"Answer\") },
+                    label = { Text("Answer") },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
         },
         confirmButton = {
             Button(onClick = { onConfirm(question, answer) }) {
-                Text(\"Confirm\")
+                Text("Confirm")
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(\"Cancel\")
+                Text("Cancel")
             }
         }
     )
