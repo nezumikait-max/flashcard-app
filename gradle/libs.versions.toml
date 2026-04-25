@@ -1,6 +1,6 @@
 [versions]
 # Core Tooling
-agp         = "8.5.2"
+agp         = "8.9.1"
 kotlin      = "2.0.0"
 ksp         = "2.3.6"  # Modern KSP2 (Independent of Kotlin version)
 junit       = "4.13.2"
