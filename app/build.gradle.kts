@@ -57,10 +57,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    // Room 3.0 (Using the new Room3 packages from your TOML)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    // Ensure you use Room 3.0+ for KSP2 compatibility
+    implementation("androidx.room:room-runtime:3.0.0-alpha03")
+    implementation("androidx.room:room-ktx:3.0.0-alpha03")
+    ksp("androidx.room:room-compiler:3.0.0-alpha03")
 
     // Testing
     testImplementation(libs.junit) // Ensure this is in your TOML
