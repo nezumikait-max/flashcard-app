@@ -12,10 +12,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcardapp.data.Flashcard
 import com.example.flashcardapp.data.FlashcardViewModel
 import com.example.flashcardapp.data.FlashcardViewModelFactory
+import com.example.flashcardapp.data.FlashcardRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardViewModelFactory(FlashcardDatabase.getDatabase(LocalContext.current).flashcardDao()))) {
+fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardViewModelFactory(FlashcardRepository(FlashcardDatabase.getDatabase(LocalContext.current).flashcardDao())))) {
     val flashcards by viewModel.allFlashcards.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var editingFlashcard by remember { mutableStateOf<Flashcard?>(null) }

@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
 
     // Ensure you use Room 3.0+ for KSP2 compatibility
     implementation("androidx.room3:room3-runtime:3.0.0-alpha03")

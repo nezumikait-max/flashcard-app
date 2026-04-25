@@ -1,9 +1,9 @@
 package com.example.flashcardapp
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room3.Database
+import androidx.room3.Room
+import androidx.room3.RoomDatabase
 import com.example.flashcardapp.data.Flashcard
 import com.example.flashcardapp.data.FlashcardDao
 
