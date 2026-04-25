@@ -59,7 +59,6 @@ dependencies {
 
     // Ensure you use Room 3.0+ for KSP2 compatibility
     implementation("androidx.room3:room3-runtime:3.0.0-alpha03")
-    implementation("androidx.room3:room3-ktx:3.0.0-alpha03")
     ksp("androidx.room3:room3-compiler:3.0.0-alpha03")
 
     // Testing
