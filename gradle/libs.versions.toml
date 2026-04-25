@@ -2,7 +2,7 @@
 # Core Tooling
 agp         = "8.9.1"
 kotlin      = "2.0.0"
-ksp         = "2.3.6"  # Modern KSP2 (Independent of Kotlin version)
+ksp         = "2.0.0-1.0.24"  # Modern KSP2 (Independent of Kotlin version)
 junit       = "4.13.2"
 
 # AndroidX / Compose
