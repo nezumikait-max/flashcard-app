@@ -1,1 +1,110 @@
-package com.example.flashcardapp\n\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.lazy.LazyColumn\nimport androidx.compose.foundation.lazy.items\nimport androidx.compose.material3.*\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.platform.LocalContext\nimport androidx.compose.ui.unit.dp\nimport androidx.lifecycle.viewmodel.compose.viewModel\nimport com.example.flashcardapp.data.Flashcard\nimport com.example.flashcardapp.data.FlashcardViewModel\nimport com.example.flashcardapp.data.FlashcardViewModelFactory\n\n@OptIn(ExperimentalMaterial3Api::class)\n@Composable\nfun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardViewModelFactory(FlashcardDatabase.getDatabase(LocalContext.current).flashcardDao()))) {\n    val flashcards by viewModel.allFlashcards.collectAsState()\n    var showDialog by remember { mutableStateOf(false) }\n    var editingFlashcard by remember { mutableStateOf<Flashcard?>(null) }\n\n    Scaffold(\n        floatingActionButton = {\n            FloatingActionButton(onClick = { showDialog = true; editingFlashcard = null }) {\n                Text(\"Add Flashcard\")\n            }\n        }\n    ) {\ paddingValues ->\n        Column(modifier = Modifier\n            .fillMaxSize()\n            .padding(paddingValues)\n            .padding(16.dp)) {\n            if (flashcards.isEmpty()) {\n                Text(\"No flashcards yet. Add one!\")\n            } else {\n                LazyColumn {\n                    items(flashcards) {\ flashcard ->\n                        FlashcardCard(\n                            flashcard = flashcard,\n                            onEdit = { cardToEdit ->\n                                editingFlashcard = cardToEdit\n                                showDialog = true\n                            },\n                            onDelete = { cardToDelete ->\n                                viewModel.deleteFlashcard(cardToDelete)\n                            }\n                        )\n                    }\n                }\n            }\n        }\n    }\n\n    if (showDialog) {\n        FlashcardDialog(\n            flashcard = editingFlashcard,\n            onDismiss = { showDialog = false },\n            onConfirm = {\ question, answer ->\n                if (editingFlashcard == null) {\n                    viewModel.insertFlashcard(Flashcard(question = question, answer = answer))\n                } else {\n                    editingFlashcard?.copy(question = question, answer = answer)?.let {\n                        viewModel.updateFlashcard(it)\n                    }\n                }\n                showDialog = false\n            }\n        )\n    }\n}\n\n@OptIn(ExperimentalMaterial3Api::class)\n@Composable\nfun FlashcardDialog(flashcard: Flashcard?, onDismiss: () -> Unit, onConfirm: (String, String) -> Unit) {\n    var question by remember { mutableStateOf(flashcard?.question ?: \"\") }\n    var answer by remember { mutableStateOf(flashcard?.answer ?: \"\") }\n\n    AlertDialog(\n        onDismissRequest = onDismiss,\n        title = { Text(if (flashcard == null) \"Add Flashcard\" else \"Edit Flashcard\") },\n        text = {\n            Column {\n                OutlinedTextField(\n                    value = question,\n                    onValueChange = { question = it },\n                    label = { Text(\"Question\") },\n                    modifier = Modifier.fillMaxWidth()\n                )\n                Spacer(modifier = Modifier.height(8.dp))\n                OutlinedTextField(\n                    value = answer,\n                    onValueChange = { answer = it },\n                    label = { Text(\"Answer\") },\n                    modifier = Modifier.fillMaxWidth()\n                )\n            }\n        },\n        confirmButton = {\n            Button(onClick = { onConfirm(question, answer) }) {\n                Text(\"Confirm\")\n            }\n        },\n        dismissButton = {\n            Button(onClick = onDismiss) {\n                Text(\"Cancel\")\n            }\n        }\n    )\n}
+package com.example.flashcardapp
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashcardapp.data.Flashcard
+import com.example.flashcardapp.data.FlashcardViewModel
+import com.example.flashcardapp.data.FlashcardViewModelFactory
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DeckScreen(viewModel: FlashcardViewModel = viewModel(factory = FlashcardViewModelFactory(FlashcardDatabase.getDatabase(LocalContext.current).flashcardDao()))) {
+    val flashcards by viewModel.allFlashcards.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+    var editingFlashcard by remember { mutableStateOf<Flashcard?>(null) }
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { showDialog = true; editingFlashcard = null }) {
+                Text(\"Add Flashcard\")
+            }
+        }
+    ) {\ paddingValues ->
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+            .padding(16.dp)) {
+            if (flashcards.isEmpty()) {
+                Text(\"No flashcards yet. Add one!\")
+            } else {
+                LazyColumn {
+                    items(flashcards) {\ flashcard ->
+                        FlashcardCard(
+                            flashcard = flashcard,
+                            onEdit = { cardToEdit ->
+                                editingFlashcard = cardToEdit
+                                showDialog = true
+                            },
+                            onDelete = { cardToDelete ->
+                                viewModel.deleteFlashcard(cardToDelete)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (showDialog) {
+        FlashcardDialog(
+            flashcard = editingFlashcard,
+            onDismiss = { showDialog = false },
+            onConfirm = {\ question, answer ->
+                if (editingFlashcard == null) {
+                    viewModel.insertFlashcard(Flashcard(question = question, answer = answer))
+                } else {
+                    editingFlashcard?.copy(question = question, answer = answer)?.let {
+                        viewModel.updateFlashcard(it)
+                    }
+                }
+                showDialog = false
+            }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FlashcardDialog(flashcard: Flashcard?, onDismiss: () -> Unit, onConfirm: (String, String) -> Unit) {
+    var question by remember { mutableStateOf(flashcard?.question ?: \"\") }
+    var answer by remember { mutableStateOf(flashcard?.answer ?: \"\") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(if (flashcard == null) \"Add Flashcard\" else \"Edit Flashcard\") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = question,
+                    onValueChange = { question = it },
+                    label = { Text(\"Question\") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = answer,
+                    onValueChange = { answer = it },
+                    label = { Text(\"Answer\") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onConfirm(question, answer) }) {
+                Text(\"Confirm\")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text(\"Cancel\")
+            }
+        }
+    )
+}
