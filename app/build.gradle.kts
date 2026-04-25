@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    // The new 2.0+ way: No more manual version matching for Compose
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
 }

@@ -3,6 +3,7 @@
 agp         = "8.5.2"
 kotlin      = "2.0.0"
 ksp         = "2.3.6"  # Modern KSP2 (Independent of Kotlin version)
+junit       = "4.13.2"
 
 # AndroidX / Compose
 coreKtx              = "1.13.1"
@@ -33,6 +34,8 @@ androidx-material3             = { group = "androidx.compose.material3", name = 
 androidx-room-runtime          = { group = "androidx.room3", name = "room3-runtime", version.ref = "room" }
 androidx-room-ktx              = { group = "androidx.room3", name = "room3-ktx", version.ref = "room" }
 androidx-room-compiler         = { group = "androidx.room3", name = "room3-compiler", version.ref = "room" }
+
+junit                          = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
