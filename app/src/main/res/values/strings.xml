@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Flashcard App</string>
+    <string name="fgs_reason">Floating window for flashcards</string>
 </resources>

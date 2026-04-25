@@ -34,7 +34,7 @@
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                      android:value="Floating window for flashcards"/>
+                      android:value="@string/fgs_reason"/>
         </service>
     </application>
 
