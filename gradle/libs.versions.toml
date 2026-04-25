@@ -10,6 +10,7 @@ coreKtx              = "1.13.1"
 lifecycleRuntimeKtx  = "2.8.3"
 activityCompose      = "1.13.0" # Updated for 2026
 composeBom           = "2024.08.00"
+navigationCompose    = "2.8.0"
 
 # Database (Room 3.0 is the 2026 standard)
 room = "3.0.0-alpha03"
@@ -22,6 +23,7 @@ androidx-activity-compose      = { group = "androidx.activity", name = "activity
 
 # Compose
 androidx-compose-bom           = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-navigation-compose    = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-ui                    = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics           = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling            = { group = "androidx.compose.ui", name = "ui-tooling" }
