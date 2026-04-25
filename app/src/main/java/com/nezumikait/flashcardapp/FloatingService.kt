@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.NotificationCompat
+import com.nezumikait.flashcardapp.R
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
@@ -21,12 +23,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
-import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 class FloatingService : Service(), SavedStateRegistryOwner {
     private lateinit var windowManager: WindowManager
@@ -67,14 +69,14 @@ class FloatingService : Service(), SavedStateRegistryOwner {
         }
         
         val notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notification.Builder(this, channelId)
+            NotificationCompat.Builder(this, channelId)
                 .setContentTitle("Flashcard App")
                 .setContentText("Floating window is active")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .build()
         } else {
             @Suppress("DEPRECATION")
-            Notification.Builder(this)
+            NotificationCompat.Builder(this, channelId)
                 .setContentTitle("Flashcard App")
                 .setContentText("Floating window is active")
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -97,9 +99,9 @@ class FloatingService : Service(), SavedStateRegistryOwner {
             }
         }
         
-        ViewTreeLifecycleOwner.set(composeView, this)
-        ViewTreeViewModelStoreOwner.set(composeView, viewModelStoreOwner)
-        ViewTreeSavedStateRegistryOwner.set(composeView, this)
+        composeView.setViewTreeLifecycleOwner(this)
+        composeView.setViewTreeViewModelStoreOwner(viewModelStoreOwner)
+        composeView.setViewTreeSavedStateRegistryOwner(this)
 
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
