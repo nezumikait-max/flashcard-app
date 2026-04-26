@@ -7,7 +7,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import com.nezumikait.flashcardapp.R
+import com.example.flashcardapp.R
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
@@ -69,14 +69,14 @@ class FloatingService : Service(), SavedStateRegistryOwner {
         }
         
         val notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationCompat.Builder(this, channelId)
+            NotificationCompat.Builder(this, "flashcard_channel_id")
                 .setContentTitle("Flashcard App")
                 .setContentText("Floating window is active")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .build()
         } else {
             @Suppress("DEPRECATION")
-            NotificationCompat.Builder(this, channelId)
+            NotificationCompat.Builder(this, "flashcard_channel_id")
                 .setContentTitle("Flashcard App")
                 .setContentText("Floating window is active")
                 .setSmallIcon(R.mipmap.ic_launcher)
