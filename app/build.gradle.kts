@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -15,7 +16,6 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,15 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
-
-    // NOTE: composeOptions block is REMOVED. 
-    // The kotlin-compose plugin handles this automatically.
 }
 
 dependencies {
-    // Core AndroidX & Compose (Using TOML aliases)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -57,14 +54,15 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
 
-    // Ensure you use Room 3.0+ for KSP2 compatibility
-    implementation("androidx.room3:room3-runtime:3.0.0-alpha03")
-    ksp("androidx.room3:room3-compiler:3.0.0-alpha03")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
-    // Testing
-    testImplementation(libs.junit) // Ensure this is in your TOML
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(platform(libs.androidx.compose.bom))
